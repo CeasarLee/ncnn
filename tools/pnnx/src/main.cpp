@@ -25,11 +25,6 @@
 
 #include <torch/script.h>
 
-#ifdef PNNX_TORCHVISION
-// register torchvision ops via including headers
-#include <torchvision/vision.h>
-#endif
-
 #include "ir.h"
 #include "pass_level0.h"
 #include "pass_level1.h"

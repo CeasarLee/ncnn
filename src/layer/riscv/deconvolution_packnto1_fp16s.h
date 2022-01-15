@@ -91,7 +91,7 @@ static void deconvolution_packnto1_fp16s_rvv(const Mat& bottom_blob, Mat& top_bl
                     kptr += maxk * packn;
                 }
 
-#if C906
+#ifdef RVV_SPEC_0_7
                 // TODO
                 std::vector<float> ss(packn);
                 vse32_v_f32m2((float*)ss.data(), _sum, vl);

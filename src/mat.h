@@ -1266,19 +1266,23 @@ inline Mat Mat::shape() const
 
 inline Mat Mat::channel(int _c)
 {
+    if (dims == 3)
+        return Mat(w, h, (unsigned char*)data + cstep * _c * elemsize, elemsize, elempack, allocator);
+
+    // if (dims == 4)
     Mat m(w, h, d, (unsigned char*)data + cstep * _c * elemsize, elemsize, elempack, allocator);
-    m.dims = dims - 1;
-    if (dims == 4)
-        m.cstep = (size_t)w * h;
+    m.cstep = (size_t)w * h;
     return m;
 }
 
 inline const Mat Mat::channel(int _c) const
 {
+    if (dims == 3)
+        return Mat(w, h, (unsigned char*)data + cstep * _c * elemsize, elemsize, elempack, allocator);
+
+    // if (dims == 4)
     Mat m(w, h, d, (unsigned char*)data + cstep * _c * elemsize, elemsize, elempack, allocator);
-    m.dims = dims - 1;
-    if (dims == 4)
-        m.cstep = (size_t)w * h;
+    m.cstep = (size_t)w * h;
     return m;
 }
 
@@ -1316,16 +1320,20 @@ inline const T* Mat::row(int y) const
 
 inline Mat Mat::channel_range(int _c, int channels)
 {
-    Mat m(w, h, d, channels, (unsigned char*)data + cstep * _c * elemsize, elemsize, elempack, allocator);
-    m.dims = dims;
-    return m;
+    if (dims == 3)
+        return Mat(w, h, channels, (unsigned char*)data + cstep * _c * elemsize, elemsize, elempack, allocator);
+
+    // if (dims == 4)
+    return Mat(w, h, d, channels, (unsigned char*)data + cstep * _c * elemsize, elemsize, elempack, allocator);
 }
 
 inline const Mat Mat::channel_range(int _c, int channels) const
 {
-    Mat m(w, h, d, channels, (unsigned char*)data + cstep * _c * elemsize, elemsize, elempack, allocator);
-    m.dims = dims;
-    return m;
+    if (dims == 3)
+        return Mat(w, h, channels, (unsigned char*)data + cstep * _c * elemsize, elemsize, elempack, allocator);
+
+    // if (dims == 4)
+    return Mat(w, h, d, channels, (unsigned char*)data + cstep * _c * elemsize, elemsize, elempack, allocator);
 }
 
 inline Mat Mat::depth_range(int z, int depths)

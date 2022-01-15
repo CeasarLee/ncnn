@@ -49,18 +49,22 @@ protected:
 
 public:
     Layer* activation;
-
-    Mat weight_3x3s2_data;
-
-    Mat weight_sgemm_data;
-    Mat weight_3x3_winograd42_data;
+    bool use_winograd3x3;
+    bool use_sgemm1x1;
     Mat weight_3x3_winograd64_data;
+    Mat weight_3x3s2_data;
+    Mat weight_sgemm_data;
 
     // forwardDilation
     Layer* convolution_dilation1;
 
     // pack4
-    Mat weight_data_packed;
+    Mat weight_data_pack4;
+    Mat weight_data_pack1to4;
+    Mat weight_data_pack4to1;
+
+    Mat weight_3x3_winograd42_data_pack4;
+    Mat weight_sgemm_data_pack4;
 
     // fp16
     Mat weight_data_fp16;

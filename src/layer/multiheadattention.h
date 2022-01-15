@@ -30,10 +30,16 @@ public:
 
     virtual int forward(const std::vector<Mat>& bottom_blobs, std::vector<Mat>& top_blobs, const Option& opt) const;
 
-public:
+    virtual int create_pipeline(const Option& opt);
+#if NCNN_INT8
+    int forward_int8(const std::vector<Mat>& bottom_blobs, std::vector<Mat>& top_blobs, const Option& opt) const;
+#endif
+
+    public:
     int embed_dim;
     int num_head;
     int weight_data_size;
+    int int8_scale_term;
 
     Mat q_weight_data;
     Mat q_bias_data;
@@ -43,7 +49,16 @@ public:
     Mat v_bias_data;
     Mat out_weight_data;
     Mat out_bias_data;
-};
+
+#if NCNN_INT8
+        Mat weight_data_int8_scales;
+        Mat bottom_blob_int8_scales;
+        Mat top_blob_int8_scales;
+        Mat middle_blob_int8_scales;
+        vector<
+#endif
+
+    };
 
 } // namespace ncnn
 

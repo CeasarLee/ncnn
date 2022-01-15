@@ -77,6 +77,9 @@ public:
     Mat bottom_blob_int8_scales;
     Mat top_blob_int8_scales;
 #endif
+
+    // implementation type, 0 means do not use auto pack model
+    int impl_type;
 };
 
 } // namespace ncnn

@@ -13,8 +13,8 @@
 // specific language governing permissions and limitations under the License.
 
 #include "layer.h"
-
 #include "cpu.h"
+#include <iostream>
 
 #include <math.h>
 #include <string.h>
@@ -210,7 +210,6 @@ int layer_to_index(const char* type)
         if (strcmp(type, layer_registry[i].name) == 0)
             return i;
     }
-
     return -1;
 }
 
@@ -219,7 +218,6 @@ Layer* create_layer(const char* type)
     int index = layer_to_index(type);
     if (index == -1)
         return 0;
-
     return create_layer(index);
 }
 #endif // NCNN_STRING
@@ -232,13 +230,6 @@ Layer* create_layer(int index)
     // clang-format off
     // *INDENT-OFF*
     layer_creator_func layer_creator = 0;
-#if NCNN_RUNTIME_CPU && NCNN_AVX512
-    if (ncnn::cpu_support_x86_avx512())
-    {
-        layer_creator = layer_registry_avx512[index].creator;
-    }
-    else
-#endif// NCNN_RUNTIME_CPU && NCNN_AVX512
 #if NCNN_RUNTIME_CPU && NCNN_AVX2
     if (ncnn::cpu_support_x86_avx2())
     {

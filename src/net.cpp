@@ -23,6 +23,7 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
+#include <cstring>
 
 #if NCNN_BENCHMARK
 #include "benchmark.h"
@@ -797,7 +798,7 @@ int NetPrivate::convert_layout(Mat& bottom_blob, const Layer* layer, const Optio
         int elemcount = 0;
         if (dims == 1) elemcount = bottom_blob.elempack * bottom_blob.w;
         if (dims == 2) elemcount = bottom_blob.elempack * bottom_blob.h;
-        if (dims == 3 || dims == 4) elemcount = bottom_blob.elempack * bottom_blob.c;
+        if (dims == 3) elemcount = bottom_blob.elempack * bottom_blob.c;
 
         int elembits = bottom_blob.elembits();
 
@@ -1380,7 +1381,6 @@ int Net::load_param(const DataReader& dr)
         NCNN_LOGE("param is too old, please regenerate");
         return -1;
     }
-
     // parse
     int layer_count = 0;
     int blob_count = 0;
@@ -1439,7 +1439,6 @@ int Net::load_param(const DataReader& dr)
         SCAN_VALUE("%255s", layer_name)
         SCAN_VALUE("%d", bottom_count)
         SCAN_VALUE("%d", top_count)
-
         Layer* layer = create_layer(layer_type);
         if (!layer)
         {

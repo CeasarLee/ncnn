@@ -279,6 +279,7 @@ int Quantize_x86::forward(const Mat& bottom_blob, Mat& top_blob, const Option& o
                 #pragma omp parallel for num_threads(opt.num_threads)
                 for (int i = 0; i < w; i++)
                 {
+
                     const float* ptr0 = (const float*)bottom_blob + i * 4;
                     signed char* outptr = (signed char*)top_blob + i * 4;
 
